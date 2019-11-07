@@ -2,7 +2,7 @@ require 'kramdown'
 
 module Kramdown
   module Converter
-    module Html
+    class Html
 
       include ActionView::Helpers::AssetTagHelper
 
@@ -27,8 +27,8 @@ module KramdownRails
         Thread.current[:erb_template] ||= ActionView::Template.registered_template_handler(:erb)
       end
 
-      def call(template)
-        compiled_template = erb.call(template)
+      def call(template, source)
+        compiled_template = erb.call(template, source)
         "Kramdown::Document.new(begin;#{compiled_template};end).to_html.html_safe"
       end
 
